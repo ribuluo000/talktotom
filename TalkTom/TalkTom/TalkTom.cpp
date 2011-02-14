@@ -13,6 +13,11 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	init();
 
+
+	HANDLE hThreadSound;
+	hThreadSound = (HANDLE)_beginthreadex(NULL, NULL, soundThread, NULL, NULL, NULL);
+	CloseHandle(hThreadSound);
+
 	g_camshiftHelper._OpenAdjustWindow();
 
 	arVideoCapStart();

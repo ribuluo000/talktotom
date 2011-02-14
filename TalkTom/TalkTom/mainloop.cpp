@@ -32,16 +32,21 @@ void   mainLoop(void)
 	// 使用opengl的逆拾取操作
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
+	
 	GLdouble mvmatrix[16];
 	glGetDoublev(GL_MODELVIEW_MATRIX, mvmatrix);
+	
 	GLdouble projmatrix[16];
 	glGetDoublev(GL_PROJECTION_MATRIX, projmatrix);
+	
 	GLint realy = viewport[3] - (GLint)y;
 	//	printf("detected: x = %d	real = %d\n\n", x, realy);
 
 	double wxDir, wyDir, wzDir, wxOri, wyOri, wzOri;
+	
 	gluUnProject((GLdouble)x, (GLdouble)realy, 1.0,\
 			      mvmatrix, projmatrix, viewport, &wxDir, &wyDir, &wzDir);
+	
 	gluUnProject((GLdouble)g_global.imgWidth/2, (GLdouble)g_global.imgHeight/2, 0.0,\
 				  mvmatrix, projmatrix, viewport, &wxOri, &wyOri, &wzOri);
 
@@ -52,8 +57,6 @@ void   mainLoop(void)
 
 	argDrawMode2D();
 	argDispImage( dataPtr, 0,0 );
-
-
 
 
 	/* detect the markers in the video frame */
@@ -74,8 +77,14 @@ void   mainLoop(void)
 	}
 	if( k == -1 ) {
 		argSwapBuffers();
+		// we do not get the visibility of the marker
+		ResetEvent(g_global.hWaitForMarker);
 		return;
 	}
+
+	// we get the visibility of the marker
+	SetEvent(g_global.hWaitForMarker);
+
 
 	/* get the transformation between the marker and the real camera */
 	arGetTransMat(&marker_info[k], g_global.patt_center, g_global.patt_width, g_global.patt_trans);

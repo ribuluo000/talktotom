@@ -7,6 +7,7 @@
 class CGlobal
 {
 public:
+	// for AR marker recognition
 	char			*vconf;
 	int             imgWidth, imgHeight;
 	int             thresh;
@@ -20,8 +21,15 @@ public:
 	double          patt_center[2];
 	double          patt_trans[3][4];
 
+	// for thread synchronism
+	HANDLE			 hWaitForMarker;
+
+	// hear sound?
+	bool bHearSound;
+
 	CGlobal()
 	{
+		// for AR 
 		char strVC[] = "..\\data\\WDM_camera_flipV.xml";
 		int i = sizeof(strVC);
 		vconf = new char [sizeof(strVC) + 1];
@@ -43,6 +51,12 @@ public:
 		patt_width = 80.0;
 		patt_center[0] = 0.0;
 		patt_center[1] = 0.0;
+
+		// for thread synchronism
+		hWaitForMarker = CreateEvent(NULL, TRUE, FALSE, NULL);
+		
+		// hear sound?
+		bHearSound = false;
 	}
 
 	~CGlobal()
@@ -61,6 +75,8 @@ public:
 		{
 			delete [] patt_name;
 		}
+
+		CloseHandle(hWaitForMarker);
 	}
 };
 
