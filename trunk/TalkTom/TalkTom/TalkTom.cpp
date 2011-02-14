@@ -4,8 +4,18 @@
 #include "stdafx.h"
 
 
-int _tmain(int argc, _TCHAR* argv[])
+CGlobal g_global;
+
+int main(int argc, char* argv[])
 {
-	return 0;
+	glutInit(&argc, argv);
+	init();
+
+
+	arVideoCapStart();
+	argMainLoop(mouseEvent, keyEvent, mainLoop );
+
+
+	return (0);
 }
 

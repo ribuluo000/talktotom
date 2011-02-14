@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\debug"
+			IntermediateDirectory="..\imtermediate"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\opencv\include, ..\opengl\include, ..\AR\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,7 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="libARd.lib libARgsubd.lib libARvideod.lib opengl32.lib glu32.lib glut32.lib cv.lib  cxcore.lib  ml.lib  cvaux.lib  highgui.lib  cvcam.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="..\opencv\lib, ..\AR\lib, ..\opengl\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -171,6 +174,42 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\CamShiftHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cleanup.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CrashTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\draw.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\init.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\keyEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\mainloop.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Matrix.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\mouseEvent.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -200,6 +239,46 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\CamshiftHelper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cleanup.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CrashTest.h"
+				>
+			</File>
+			<File
+				RelativePath=".\draw.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Global.h"
+				>
+			</File>
+			<File
+				RelativePath=".\init.h"
+				>
+			</File>
+			<File
+				RelativePath=".\keyEvent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\mainloop.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Matrix.h"
+				>
+			</File>
+			<File
+				RelativePath=".\mouseEvent.h"
+				>
+			</File>
 			<File
 				RelativePath=".\stdafx.h"
 				>
