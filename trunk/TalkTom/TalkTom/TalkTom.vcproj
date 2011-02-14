@@ -190,6 +190,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FucSoundStart.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FuncFind.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\init.cpp"
 				>
 			</File>
@@ -207,6 +215,14 @@
 			</File>
 			<File
 				RelativePath=".\mouseEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\soundThread.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SpeechToText.cpp"
 				>
 			</File>
 			<File
@@ -233,6 +249,10 @@
 				RelativePath=".\TalkTom.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\TextToRead.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -253,6 +273,14 @@
 			</File>
 			<File
 				RelativePath=".\draw.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FuncFind.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FuncSoundStart.h"
 				>
 			</File>
 			<File
@@ -280,11 +308,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\soundThread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SpeechToText.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
 			<File
+				RelativePath=".\StructForSRandTTS.h"
+				>
+			</File>
+			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TextToRead.h"
 				>
 			</File>
 		</Filter>

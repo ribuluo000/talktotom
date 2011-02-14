@@ -30,4 +30,6 @@ void init()
 
 	/* open the graphics window */
 	argInit( &g_global.cparam, 1.0, 0, 0, 0, 0 );
+	
+	glutReshapeWindow(500,500);
 }

@@ -15,7 +15,7 @@
 
 // TODO: reference additional headers your program requires here
 #include <windows.h>
-
+#include <iostream>
 #include <stdlib.h>
 
 #include <glut.h>
@@ -41,6 +41,10 @@
 #include "Matrix.h"
 #include "CrashTest.h"
 
-
+#include <process.h> 
+#include "soundThread.h"
+#include "StructForSRandTTS.h"
+#include "FuncFind.h"
+#include "FuncSoundStart.h"
 
 #pragma disable(warning: 4819)
