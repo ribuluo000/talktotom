@@ -122,7 +122,7 @@ void CCamShiftHelper::_SaveTarget(IplImage *pOriginImage)
 
 }
 
-bool CCamShiftHelper::_Detect( IplImage *pOriginframe, bool bDrawOut )
+bool CCamShiftHelper::_Detect( bool bDrawOut )
 {
 	if (!m_bInitial)
 	{
@@ -131,7 +131,6 @@ bool CCamShiftHelper::_Detect( IplImage *pOriginframe, bool bDrawOut )
 
 	if (m_bBeginTrack == true)
 	{
-		cvCopy( pOriginframe, m_image, 0 );
 		cvCvtColor( m_image, m_hsv, CV_BGR2HSV );  // ²ÊÉ«¿Õ¼ä×ª»» BGR to HSV 
 
 		cvInRangeS( m_hsv, cvScalar(0,m_smin,MIN(m_vmin,m_vmax),0),
@@ -171,15 +170,13 @@ bool CCamShiftHelper::_Detect( IplImage *pOriginframe, bool bDrawOut )
 	return true;
 }
 
-bool CCamShiftHelper::_ShowAdjustWindow( IplImage *pOriginImage , bool bShowTarget)
+bool CCamShiftHelper::_ShowAdjustWindow( bool bShowTarget)
 {
 	if (!m_bInitial)
 	{
 		return false;
 	}
 
-	this->_SetOrigin(pOriginImage->origin);
-	cvCopy(pOriginImage, m_image);
 
 	this->_SaveTarget(m_image);
 	this->_ShowTargetArea(m_image);
@@ -272,4 +269,31 @@ void CCamShiftHelper::_OpenAdjustWindow()
 	cvSetMouseCallback( "CamShift Adjust Window", 
 		on_mouse,
 		this); 
+}
+
+void CCamShiftHelper::_Fill_CV_IplImage( int width, int height, char * imageData )
+{
+	// artoolkit video data to IplImage*
+	// the key lies in the fact that arVideoGetImage returns buffer with order
+	// RGBA, which is the 4-channel and IPL_DEPTH_8U-depth OpenCV buffer		
+	IplImage *img = cvCreateImageHeader(cvSize(width, height), IPL_DEPTH_8U, 4);
+
+	cvSetImageData(img, imageData, width * 4);
+
+	// convert 4 channels to 3 channels
+	IplImage *pRed = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
+	IplImage *pGreen = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
+	IplImage *pBlue = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
+	IplImage *pAlpha = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
+
+	cvSplit(img, pBlue, pGreen, pRed, pAlpha);
+
+	cvMerge(pBlue, pGreen, pRed, NULL, m_image);
+
+	cvReleaseImage(&pRed);
+	cvReleaseImage(&pBlue);
+	cvReleaseImage(&pGreen);
+	cvReleaseImage(&pAlpha);
+
+	cvReleaseImageHeader(&img);
 }
