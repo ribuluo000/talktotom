@@ -23,8 +23,6 @@ public:
 
 	void _CloseAdjustWindow();
 
-	bool _Detect(bool bDrawOut = false);
-
 	void _Fill_CV_IplImage(int width, int height, char * imageData);
 
 public:
@@ -40,8 +38,11 @@ public:
 		{*pX = (int)m_track_box.center.x; 
 		 *pY = (int)m_track_box.center.y; }
 
+	void _ShowImage(bool bShowImage = true){m_bShowImage = bShowImage; }
+
 private:
 	CCamShiftHelper(CCamShiftHelper&){}
+
 	CCamShiftHelper& operator=(CCamShiftHelper&){}
 
 private:
@@ -51,7 +52,7 @@ private:
 
 	void _SetOrigin(int origin);
 
-	//void _ChooseTargetByMouse( int state, int x, int y, int flags, void* param);
+	bool _Detect(bool bDrawOut = false);
 
 public:
 	static enum MOUSE_STATE {LBUTTON_UP, LBUTTON_DOWN};
@@ -83,8 +84,7 @@ private:
 	CvConnectedComp m_track_comp;
 	int m_hdims;     // 划分HIST的个数，越高越精确
 
-private:
-	int formerX, formerY;
+	bool m_bShowImage; 
 };
 
 #endif

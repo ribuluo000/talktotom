@@ -37,6 +37,10 @@
 #include "Global.h"
 #include "keyEvent.h"
 #include "Global.h"
+#include "CamshiftHelper.h"
+#include "Matrix.h"
+#include "CrashTest.h"
+
 
 
 #pragma disable(warning: 4819)

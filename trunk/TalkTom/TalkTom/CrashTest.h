@@ -1,19 +1,9 @@
 #include "stdafx.h"
 #include <math.h>
 
-typedef struct Vector3
-{
-	int x;
-	int y;
-	int z;
-	void normalize()
-	{
-		double length = sqrt(double(x*x + y*y + z*z));
-		x = (int)(x / length);
-		y = (int)(y / length);
-		z = (int)(z / length);
-	}
-}VECTOR3D, *PVECTOR3D;
+#ifndef __CCRASHTEST__
+
+#define __CCRASHTEST__
 
 class CCrashTest
 {
@@ -33,6 +23,22 @@ private:
 	void addPoint(int x, int y, int z);
 
 private:
+	typedef struct Vector3
+	{
+		int x;
+		int y;
+		int z;
+		void normalize()
+		{
+			double length = sqrt(double(x*x + y*y + z*z));
+			x = (int)(x / length);
+			y = (int)(y / length);
+			z = (int)(z / length);
+		}
+	}VECTOR3D, *PVECTOR3D;
+
 	VECTOR3D minAABB;
 	VECTOR3D maxAABB;
 };
+
+#endif

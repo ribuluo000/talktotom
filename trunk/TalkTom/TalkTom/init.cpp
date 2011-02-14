@@ -10,15 +10,15 @@ void init()
 	/* open the video path */
 	if( arVideoOpen( g_global.vconf ) < 0 ) exit(0);
 	/* find the size of the window */
-	if( arVideoInqSize(&g_global.xsize, &g_global.ysize) < 0 ) exit(0);
-	printf("Image size (x,y) = (%d,%d)\n", g_global.xsize, g_global.ysize);
+	if( arVideoInqSize(&g_global.imgWidth, &g_global.imgHeight) < 0 ) exit(0);
+	printf("Image size (x,y) = (%d,%d)\n", g_global.imgWidth, g_global.imgHeight);
 
 	/* set the initial camera parameters */
 	if( arParamLoad(g_global.cparam_name, 1, &wparam) < 0 ) {
 		printf("Camera parameter load error !!\n");
 		exit(0);
 	}
-	arParamChangeSize( &wparam, g_global.xsize, g_global.ysize, &g_global.cparam );
+	arParamChangeSize( &wparam, g_global.imgWidth, g_global.imgHeight, &g_global.cparam );
 	arInitCparam( &g_global.cparam );
 	printf("*** Camera Parameter ***\n");
 	arParamDisp( &g_global.cparam );

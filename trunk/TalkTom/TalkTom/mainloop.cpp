@@ -2,7 +2,9 @@
 #include "mainloop.h"
 #include "draw.h"
 
+
 extern CGlobal g_global;
+extern CCamShiftHelper g_camshiftHelper;
 
 void   mainLoop(void)
 {
@@ -19,26 +21,29 @@ void   mainLoop(void)
 
 	// ----------------------
 	// by aicro
+	g_camshiftHelper._Fill_CV_IplImage(g_global.imgWidth, g_global.imgHeight, (char*)dataPtr);
 
-	//// here we take the center of the picture
-	//int x, y;
-	//camshiftHelper._GetDetectedCenter(&x, &y);
+	g_camshiftHelper._ShowAdjustWindow(true);
 
-	//// 使用opengl的逆拾取操作
-	//GLint viewport[4];
-	//glGetIntegerv(GL_VIEWPORT, viewport);
-	//GLdouble mvmatrix[16];
-	//glGetDoublev(GL_MODELVIEW_MATRIX, mvmatrix);
-	//GLdouble projmatrix[16];
-	//glGetDoublev(GL_PROJECTION_MATRIX, projmatrix);
-	//GLint realy = viewport[3] - (GLint)y;
-	////	printf("detected: x = %d	real = %d\n\n", x, realy);
+	// here we take the center of the picture
+	int x, y;
+	g_camshiftHelper._GetDetectedCenter(&x, &y);
 
-	////GLdouble mvmatrix[16];
-	////g_currentMatrix.getMatrix(mvmatrix, 16);
+	// 使用opengl的逆拾取操作
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	GLdouble mvmatrix[16];
+	glGetDoublev(GL_MODELVIEW_MATRIX, mvmatrix);
+	GLdouble projmatrix[16];
+	glGetDoublev(GL_PROJECTION_MATRIX, projmatrix);
+	GLint realy = viewport[3] - (GLint)y;
+	//	printf("detected: x = %d	real = %d\n\n", x, realy);
 
-	//gluUnProject((GLdouble)x, (GLdouble)realy, 1.0, mvmatrix, projmatrix, viewport, &wxDir, &wyDir, &wzDir);
-	//gluUnProject((GLdouble)g_width/2, (GLdouble)g_height/2, 0.0, mvmatrix, projmatrix, viewport, &wxOri, &wyOri, &wzOri);
+	double wxDir, wyDir, wzDir, wxOri, wyOri, wzOri;
+	gluUnProject((GLdouble)x, (GLdouble)realy, 1.0,\
+			      mvmatrix, projmatrix, viewport, &wxDir, &wyDir, &wzDir);
+	gluUnProject((GLdouble)g_global.imgWidth/2, (GLdouble)g_global.imgHeight/2, 0.0,\
+				  mvmatrix, projmatrix, viewport, &wxOri, &wyOri, &wzOri);
 
 	//	printf("\n%f %f %f\n",wxDir, wyDir, wzDir);
 
@@ -77,7 +82,7 @@ void   mainLoop(void)
 
 	//printf("\n%f %f %f\n",patt_trans[0][3],patt_trans[1][3],patt_trans[2][3]);
 
-	draw();
+	draw(wxOri, wyOri, wzOri, wxDir, wyDir, wzDir);
 
 	argSwapBuffers();
 }
