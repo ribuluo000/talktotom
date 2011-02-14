@@ -29,7 +29,7 @@ CCamShiftHelper::CCamShiftHelper()
 	m_track_box.center.y = 0;
 	m_track_box.angle = 0.0;
 
-	formerX = formerY = 0;
+	m_bShowImage = true;
 }
 
 
@@ -84,6 +84,8 @@ void CCamShiftHelper::_ShowTargetArea( IplImage *pOriginFrame )
 		&& m_selection.width > 0 
 		&& m_selection.height > 0)
 	{
+		//printf("\nIn _ShowTargetArea\n");
+
 		cvSetImageROI( pOriginFrame, m_selection );
 		cvXorS( pOriginFrame, cvScalarAll(255), pOriginFrame, 0 );
 		cvResetImageROI( pOriginFrame );
@@ -96,6 +98,8 @@ void CCamShiftHelper::_SaveTarget(IplImage *pOriginImage)
 
 	if ( m_bSaveTarget == true )
 	{
+		//printf("\nIn _SaveTarget\n");
+
 		cvCopy( pOriginImage, m_image, 0 );
 		cvCvtColor( pOriginImage, m_hsv, CV_BGR2HSV );  // 彩色空间转换 BGR to HSV 
 
@@ -104,7 +108,7 @@ void CCamShiftHelper::_SaveTarget(IplImage *pOriginImage)
 		cvSplit( m_hsv, m_hue, 0, 0, 0 );  // 只提取 HUE 分量
 
 
-		float max_val = 0.f;
+		float max_val = 0.0f;
 		cvSetImageROI( m_hue, m_selection );  // 得到选择区域 for ROI
 		cvSetImageROI( m_mask, m_selection ); // 得到选择区域 for mask
 		cvCalcHist( &m_hue, m_hist, 0, m_mask ); // 计算直方图
@@ -145,18 +149,6 @@ bool CCamShiftHelper::_Detect( bool bDrawOut )
 			&m_track_comp, &m_track_box );
 		m_track_window = m_track_comp.rect;
 
-		//// test whether the center is near (within 5 pixels) the former point
-		//int tempx = m_track_box.center.x;
-		//int tempy = m_track_box.center.y;
-		//if (abs(m_track_box.center.x - formerX) < 3 && abs(m_track_box.center.y - formerY) < 3 )
-		//{
-
-		//	m_track_box.center.x = formerX;
-		//	m_track_box.center.x = formerY;
-		//}
-		//formerX = tempx;
-		//formerY = tempy;
-
 
 		if( m_image->origin )
 			m_track_box.angle = -m_track_box.angle;
@@ -170,20 +162,22 @@ bool CCamShiftHelper::_Detect( bool bDrawOut )
 	return true;
 }
 
-bool CCamShiftHelper::_ShowAdjustWindow( bool bShowTarget)
+bool CCamShiftHelper::_ShowAdjustWindow(bool bShowTarget)
 {
 	if (!m_bInitial)
 	{
 		return false;
 	}
 
-
 	this->_SaveTarget(m_image);
 	this->_ShowTargetArea(m_image);
-	this->_Detect(m_image, bShowTarget);
+	this->_Detect(bShowTarget);
 
-	cvShowImage("CamShift Adjust Window", m_image);
-	cvWaitKey(2);
+	if (m_bShowImage == true)
+	{
+		cvShowImage("CamShift Adjust Window", m_image);
+		cvWaitKey(2);
+	}
 
 	return true;
 }
@@ -273,6 +267,8 @@ void CCamShiftHelper::_OpenAdjustWindow()
 
 void CCamShiftHelper::_Fill_CV_IplImage( int width, int height, char * imageData )
 {
+	this->_Initialize(width, height);
+
 	// artoolkit video data to IplImage*
 	// the key lies in the fact that arVideoGetImage returns buffer with order
 	// RGBA, which is the 4-channel and IPL_DEPTH_8U-depth OpenCV buffer		

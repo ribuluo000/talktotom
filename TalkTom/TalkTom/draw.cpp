@@ -3,7 +3,8 @@
 
 extern CGlobal g_global;
 
-void   draw()
+void   draw(double xOri, double yOri, double zOri,\
+			double xDir, double yDir, double zDir)
 {
 	double    gl_para[16];
 	GLfloat   mat_ambient[]     = {0.0, 0.0, 1.0, 1.0};
@@ -48,19 +49,19 @@ void   draw()
 	// ----------------------
 	// by aicro
 
-	//CCrashTest crashTest;
-	//crashTest.calculateAABB(-25, 0, -25, 25, 50, 25);
-	//double t = crashTest.rayIntersect(wxOri, wyOri, wzOri, wxDir, wyDir, wzDir);
-
-	//if (t != -1)
-	//{
-	//	printf("\n%d\n", mycount++);
-	//}
+	CCrashTest crashTest;
+	crashTest.calculateAABB(-25, 0, -25, 25, 50, 25);
+	double t = crashTest.rayIntersect(xOri, yOri, zOri, xDir, yDir, zDir);
+ 
+	if (t != -1)
+	{
+		
+	}
 
 	//// draw out the ray
 	//glBegin(GL_LINES);
-	//	glVertex3d(wxOri,wyOri,wzOri);
-	//	glVertex3d(wxDir,wyDir,wzDir);
+	//	glVertex3d(xOri,yOri,zOri);
+	//	glVertex3d(xDir,yDir,zDir);
 	//glEnd();
 
 

@@ -8,7 +8,7 @@ class CGlobal
 {
 public:
 	char			*vconf;
-	int             xsize, ysize;
+	int             imgWidth, imgHeight;
 	int             thresh;
 
 	char           *cparam_name;
@@ -27,7 +27,7 @@ public:
 		vconf = new char [sizeof(strVC) + 1];
 		memcpy(vconf, strVC, sizeof(strVC) + 1);
 
-		xsize = ysize = 0;
+		imgWidth = imgHeight = 0;
 		thresh = 100;
 
 		char strCN[] = "..\\data\\camera_para.dat";
@@ -43,6 +43,24 @@ public:
 		patt_width = 80.0;
 		patt_center[0] = 0.0;
 		patt_center[1] = 0.0;
+	}
+
+	~CGlobal()
+	{
+		if (vconf != NULL)
+		{
+			delete [] vconf;
+		}
+
+		if (cparam_name != NULL)
+		{
+			delete [] cparam_name;
+		}
+
+		if (patt_name != NULL)
+		{
+			delete [] patt_name;
+		}
 	}
 };
 
