@@ -19,12 +19,13 @@ public:
 	
 	void _OpenAdjustWindow();
 
-	bool _ShowAdjustWindow(IplImage *pOriginImage , bool bShowTarget = false);
+	bool _ShowAdjustWindow(bool bShowTarget = false);
 
 	void _CloseAdjustWindow();
 
-	bool _Detect(IplImage *pOriginframe, bool bDrawOut = false);
+	bool _Detect(bool bDrawOut = false);
 
+	void _Fill_CV_IplImage(int width, int height, char * imageData);
 
 public:
 	void _GetImage(IplImage **img){*img = m_image; }
