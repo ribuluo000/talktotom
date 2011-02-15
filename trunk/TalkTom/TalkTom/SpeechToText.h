@@ -5,7 +5,7 @@
 
 #include "stdafx.h"
 #include <windows.h>
-#include <sapi.h>           // SAPI includes
+#include <sapi53.h>           // SAPI includes
 #include <sphelper.h>
 #include <spuihelp.h>
 #include "StructForSRandTTS.h"

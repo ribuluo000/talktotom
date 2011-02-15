@@ -39,7 +39,7 @@ CSpeechToText::CSpeechToText(WCHAR * szGrammarFileName)
 			break;
 		}
 
-		hr = m_cpCmdGrammar->LoadCmdFromFile(szGrammarFileName, SPLO_DYNAMIC);
+		hr = m_cpCmdGrammar->LoadCmdFromFile(szGrammarFileName,  SPLO_DYNAMIC);
 		if (FAILED(hr))
 		{
 			m_bSuccess = false;
