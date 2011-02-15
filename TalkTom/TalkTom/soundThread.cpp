@@ -17,6 +17,8 @@ unsigned __stdcall soundThread(void * p)
 		return 0;
 	}
 
+	asdffsda
+
 	// create message queue
 	MSG msg;
 	PeekMessage(&msg, NULL, MS_MYMESSAGE, MS_MYMESSAGE, PM_NOREMOVE);
